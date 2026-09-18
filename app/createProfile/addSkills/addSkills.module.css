@@ -1,0 +1,196 @@
+.page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #080a18, #10132b, #080a18);
+  color: white;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background: #11142d;
+  padding: 30px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.title {
+  text-align: center;
+  margin: 0 0 10px;
+  font-size: 30px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #a5b4fc;
+  margin: 0 0 30px;
+  line-height: 1.5;
+}
+
+.heading {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #363b70;
+  background: #080a18;
+  color: white;
+  box-sizing: border-box;
+  outline: none;
+  font-size: 15px;
+}
+
+.input:focus {
+  border-color: #6366f1;
+}
+
+.input::placeholder {
+  color: #71779d;
+}
+
+.suggestions {
+  background: #1a1e3d;
+  margin-top: 5px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #30345c;
+}
+
+.suggestion {
+  padding: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #30345c;
+  transition: background 0.2s ease;
+}
+
+.suggestion:last-child {
+  border-bottom: none;
+}
+
+.suggestion:hover {
+  background: #292d55;
+}
+
+.skillsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+.teachSkill,
+.learnSkill {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.teachSkill {
+  background: #4f46e5;
+}
+
+.learnSkill {
+  background: #7c3aed;
+}
+
+.removeButton {
+  margin-left: 8px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 17px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.fileInput {
+  width: 100%;
+  margin: 10px 0 15px;
+  color: white;
+}
+
+.preview {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  margin-bottom: 15px;
+  border: 2px solid #6366f1;
+}
+
+.uploadButton {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid #6366f1;
+  background: transparent;
+  color: #a5b4fc;
+  cursor: pointer;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.uploadButton:hover {
+  background: #1a1e3d;
+}
+
+.uploadButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.createButton {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.createButton:hover {
+  opacity: 0.9;
+}
+
+.backContainer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.backLink {
+  color: #a5b4fc;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.backLink:hover {
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 20px 12px;
+  }
+
+  .container {
+    padding: 22px 18px;
+  }
+
+  .title {
+    font-size: 25px;
+  }
+}
