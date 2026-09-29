@@ -2,11 +2,37 @@
 import styles from "./home.module.css";
 import Navbar from "../navbar/page";
 import Footer from '../footer/page'
+import WelcomeBanner from './welcome/page'
+import { useState,useEffect } from "react";
 
 const Home = () => {
+ const [profileCreated, setProfileCreated] = useState(false);
+
+ useEffect(() => {
+  const checkProfile = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const res = await fetch("/api/auth/checkProfile", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      setProfileCreated(res.ok);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  checkProfile();
+}, []);
   return (
     <div className={styles["home-page"]}>
       <Navbar />
+      
+      {profileCreated ? (
+        <WelcomeBanner />
+      ) : (
 
       <section className={styles["hero"]}>
 
@@ -114,6 +140,7 @@ const Home = () => {
         </div>
 
       </section>
+      )}
       <div>
         <Footer />
       </div>

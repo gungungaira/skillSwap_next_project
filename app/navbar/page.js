@@ -10,7 +10,7 @@ const Navbar = () => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [profileCreated, setProfileCreated] = useState(false);
 
-  const navigate = useRouter();
+  const router = useRouter();
 
   const checkProfile = async () => {
     const token = localStorage.getItem("token");
@@ -23,7 +23,7 @@ const Navbar = () => {
 
     try {
       const server = await fetch(
-        "https://barter-platform-backend.onrender.com/getMyProfile",
+        "/api/auth/checkProfile",
         {
           method: "GET",
           headers: {
@@ -63,7 +63,7 @@ const Navbar = () => {
     setProfileCreated(false);
     setProfileOpen(false);
 
-    navigate("/");
+    router.push("/");
   };
 
   return (
@@ -116,7 +116,7 @@ const Navbar = () => {
             </button>
 
             {profileOpen && (
-              <div className={clsx(styles["profile-dropdown"])}>
+             <div className={clsx(styles["profile-dropdown"], profileOpen && styles.show)}>
                 <Link href="/profile" onClick={() => setProfileOpen(false)}>
                   My Profile
                 </Link>

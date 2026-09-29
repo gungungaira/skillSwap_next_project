@@ -127,8 +127,6 @@ const fuse = new Fuse(skills, {
 });
 
 const SkillAutocomplete = () => {
-  const router = useRouter();
-
   const [teachInput, setTeachInput] = useState("");
   const [learnInput, setLearnInput] = useState("");
 
@@ -142,11 +140,12 @@ const SkillAutocomplete = () => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [uploadedPhotoUrl, setUploadedPhotoUrl] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const router = useRouter ();
 
   const onFileChange = (event) => {};
 
   const handleTeachChange = (e) => {
-    const value = e.target.name;
+    const value = e.target.value;
     setTeachInput(value);
     if (value.trim() === "") {
       setTeachSuggestions([]);
@@ -158,7 +157,7 @@ const SkillAutocomplete = () => {
   };
 
   const handleLearnChange = (e) => {
-    const value = e.target.name;
+    const value = e.target.value;
     setLearnInput(value);
     if (value.trim() === "") {
       setLearnSuggestions([]);
@@ -171,35 +170,91 @@ const SkillAutocomplete = () => {
 
   const selectTeachSkill = (skill) => {
     if (!teachingSkills.includes(skill)) {
-      setTeachingSkills(...teachingSkills, skill);
+      setTeachingSkills([...teachingSkills, skill]);
     }
     setTeachInput("");
-    setLearnSuggestions([]);
+    setTeachSuggestions([]);
   };
 
   const selectLearnSkill = (skill) => {
-    if(!setLearnSuggestions.includes(skill)){
-      setLearningSkills(...learningSkills,skill)
+    if (!learningSkills.includes(skill)) {
+      setLearningSkills([...learningSkills, skill]);
     }
     setLearnInput("");
     setLearnSuggestions([]);
   };
 
   const removeTeachSkill = (skill) => {
-   setTeachingSkills(...teachingSkills.filter((item)=> item!==skill))
+    setTeachingSkills(teachingSkills.filter((item) => item !== skill));
   };
 
   const removeLearnSkill = (skill) => {
-     setLearningSkills(...learningSkills.filter((item)=>item !==skill))
+    setLearningSkills(learningSkills.filter((item) => item !== skill));
   };
 
-  const onFileUpload = async () => {
-    
+  const onFileUpload = async () => {};
+
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl]);
+
+  const handleSubmit = async () => {
+    if (teachingSkills.length === 0) {
+      alert("Please select at least one skill you can teach.");
+      return;
+    }
+    if (learningSkills.length === 0) {
+      alert("Please select at least one skill you want to learn.");
+      return;
+    }
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login first.");
+      router.push("/");
+      return;
+    }
+
+    const profileFromStep1 =
+      JSON.parse(localStorage.getItem("profileStep1")) || {};
+
+    const profileData = {
+      ...profileFromStep1,
+      teach: teachingSkills,
+      learn: learningSkills,
+      photo: uploadedPhotoUrl || null,
+    };
+
+    try {
+      const server = await fetch("/api/auth/profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(profileData),
+      });
+
+      const text = await server.text();
+      const data = text ? JSON.parse(text) : null;
+
+      if (!server.ok) {
+        alert(
+          data?.message || `Failed to save skills (status ${server.status}).`,
+        );
+        return;
+      }
+      localStorage.setItem("profileCreated", "true");
+      window.dispatchEvent(new Event("profileCreated"));
+      router.push("/home");
+    } catch (error) {
+      console.error("Error submitting skills:", error);
+      alert("Something went wrong. Please try again.");
+    }
   };
-
-  useEffect(() => {}, []);
-
-  const handleSubmit = async () => {};
 
   return (
     <div className={styles.page}>
