@@ -135,7 +135,3 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 - [ ] Request management (send/accept/decline skill exchange requests)
 - [ ] Full profile editing (name, email, skills, photo)
 - [ ] Search functionality for people and skills
-
-## ✦ License
-
-This project is currently unlicensed. Add a license of your choice (e.g. MIT) before publishing.
